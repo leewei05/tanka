@@ -45,7 +45,11 @@ func FindEnvs(path string, opts FindOpts) ([]*v1alpha1.Environment, error) {
 func find(path string) ([]*v1alpha1.Environment, error) {
 	// try if this has envs
 	list, err := List(path, Opts{})
-	if len(list) != 0 && err == nil {
+	if err != nil {
+		return nil, err
+	}
+
+	if len(list) != 0 {
 		// it has. don't search deeper
 		return list, nil
 	}
